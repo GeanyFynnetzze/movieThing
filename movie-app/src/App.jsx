@@ -1,18 +1,23 @@
 import { useState, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
 import "./App.css";
+import movieData from "./data";
 import MovieCard from "./MovieCard";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  //e5f4cb82
-  const API = "http://www.omdbapi.com/?i=tt3896198&apikey=55ff1aa4";
-  const searchMovies = async (title) => {
-    const response = await fetch(`${API}&s=${title}`);
-    const data = await response.json();
-    setMovies(data.Search);
+  const searchMovies = (title) => {
+    // const response = await fetch(`${API}&s=${title}`);
+    // const data = await response.json();
+    const searchList = movieData.movies.filter((movie) =>
+      movie.Title.toLocaleLowerCase()
+        .toString()
+        .includes(title.toLocaleLowerCase())
+    );
+    console.log(searchList);
+    setMovies(searchList);
   };
   useEffect(() => {
     searchMovies("");
